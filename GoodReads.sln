@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoodReads.Reviews.Infra", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoodReads.Reviews.Application", "src\GoodReads.Reviews.Application\GoodReads.Reviews.Application.csproj", "{5B3962A4-8AB4-49C4-BCC7-AC2EF930265A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{B0FEB90D-73BB-411D-90B2-AA5A05B41F3B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApps", "WebApps", "{B0FEB90D-73BB-411D-90B2-AA5A05B41F3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

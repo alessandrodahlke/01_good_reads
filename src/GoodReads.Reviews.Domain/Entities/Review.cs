@@ -5,7 +5,6 @@ namespace GoodReads.Reviews.Domain.Entities
 {
     public class Review
     {
-        [BsonId]
         public Guid Id { get; private set; }
         public int Grade { get; private set; }
         public string Description { get; private set; }
