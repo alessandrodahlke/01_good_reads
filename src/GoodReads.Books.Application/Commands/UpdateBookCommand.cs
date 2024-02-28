@@ -10,18 +10,16 @@ namespace GoodReads.Books.Application.Commands
         public string Title { get; private set; }
         public string Description { get; private set; }
         public string Author { get; private set; }
-        public string ISBN { get; private set; }
         public string Publisher { get; private set; }
         public EGenderBook Gender { get; private set; }
         public int Year { get; private set; }
         public int NumberOfPages { get; private set; }
 
-        public UpdateBookCommand(string title, string description, string author, string iSBN, string publisher, EGenderBook gender, int year, int numberOfPages)
+        public UpdateBookCommand(string title, string description, string author, string publisher, EGenderBook gender, int year, int numberOfPages)
         {
             Title = title;
             Description = description;
             Author = author;
-            ISBN = iSBN;
             Publisher = publisher;
             Gender = gender;
             Year = year;
@@ -52,11 +50,6 @@ namespace GoodReads.Books.Application.Commands
                     .NotEmpty()
                     .MinimumLength(3)
                     .WithMessage("The author field must be filled");
-
-                RuleFor(c => c.ISBN)
-                    .NotEmpty()
-                    .MinimumLength(3)
-                    .WithMessage("The ISBN field must be filled");
 
                 RuleFor(c => c.Publisher)
                     .NotEmpty()

@@ -27,7 +27,7 @@ namespace GoodReads.Books.API.Controllers
         {
             var result = await _mediator.EnviarComando(command);
 
-            if (result.Success)
+            if (result.IsSuccess)
                 return Ok(result);
 
             return BadRequest(result);
@@ -39,11 +39,11 @@ namespace GoodReads.Books.API.Controllers
         public async Task<IActionResult> Update(Guid id, [FromBody] UpdateBookCommand command)
         {
             if (command.Id != id)
-                return BadRequest(new CustomResult(false, "Id not equals Command.Id"));
+                return BadRequest(CustomResult.Failure("Id not equals Command.Id"));
 
             var result = await _mediator.EnviarComando(command);
 
-            if (result.Success)
+            if (result.IsSuccess)
                 return Ok(result);
 
             return BadRequest(result);
@@ -57,7 +57,7 @@ namespace GoodReads.Books.API.Controllers
             var command = new DeleteBookCommand(id);
             var result = await _mediator.EnviarComando(command);
 
-            if (result.Success)
+            if (result.IsSuccess)
                 return Ok(result);
 
             return BadRequest(result);

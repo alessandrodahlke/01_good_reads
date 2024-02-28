@@ -31,11 +31,10 @@ namespace GoodReads.Books.Domain.Entities
             NumberOfPages = numberOfPages;
         }
 
-        public void UpdateBook(string title, string description, string isbn, string author, string publisher, EGenderBook gender, int year, int numberOfPage)
+        public void UpdateBook(string title, string description, string author, string publisher, EGenderBook gender, int year, int numberOfPage)
         {
             Title = title;
             Description = description;
-            ISBN = isbn;
             Author = author;
             Publisher = publisher;
             Gender = gender;
