@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GoodReads.Books.Domain\GoodReads.Books.Domain.csproj" />
+    <ProjectReference Include="..\GoodReads.Books.Infra\GoodReads.Books.Infra.csproj" />
+    <ProjectReference Include="..\GoodReads.Core\GoodReads.Core.csproj" />
+  </ItemGroup>
+
+</Project>
