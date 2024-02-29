@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GoodReads.Core\GoodReads.Core.csproj" />
+    <ProjectReference Include="..\GoodReads.Reviews.Domain\GoodReads.Reviews.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

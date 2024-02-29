@@ -23,7 +23,7 @@ namespace GoodReads.Reviews.Infra.Persistence.Repositories
             return await _collection.Find(r => r.BookId == bookId).ToListAsync();
         }
 
-        public async Task<Review> GetById(Guid id)
+        public async Task<Review> GetById(string id)
         {
             return await _collection.Find(r => r.Id == id).SingleOrDefaultAsync();
         }

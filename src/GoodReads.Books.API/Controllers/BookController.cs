@@ -10,12 +10,12 @@ using System.Net;
 namespace GoodReads.Books.API.Controllers
 {
     [ApiController]
-    [Route("api/books")]
-    public class BooksController : ControllerBase
+    [Route("api/book")]
+    public class BookController : ControllerBase
     {
         private readonly IMediatorHandler _mediator;
 
-        public BooksController(IMediatorHandler mediator)
+        public BookController(IMediatorHandler mediator)
         {
             _mediator = mediator;
         }

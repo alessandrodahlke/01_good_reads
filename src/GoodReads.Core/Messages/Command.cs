@@ -17,5 +17,10 @@ namespace GoodReads.Core.Messages
         {
             throw new NotImplementedException();
         }
+
+        public virtual string[] GetErrors()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

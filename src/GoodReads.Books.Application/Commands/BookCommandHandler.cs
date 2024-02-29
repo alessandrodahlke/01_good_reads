@@ -23,7 +23,7 @@ namespace GoodReads.Books.Application.Commands
         public async Task<CustomResult> Handle(CreateBookCommand message, CancellationToken cancellationToken)
         {
             if (!message.IsValid())
-                return CustomResult.Failure("Invalid command", GetErrors());
+                return CustomResult.Failure("Invalid command", message.GetErrors());
 
             if (await InUse(message.ISBN))
                 return CustomResult.Failure("This ISBN is already in use.", GetErrors());

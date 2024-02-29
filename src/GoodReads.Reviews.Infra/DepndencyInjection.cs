@@ -58,6 +58,7 @@ namespace GoodReads.Reviews.Infra
         private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddTransient<IReviewRepository, ReviewRepository>();
+            services.AddTransient<IReadingRepository, ReadingRepository>();
 
             return services;
         }
