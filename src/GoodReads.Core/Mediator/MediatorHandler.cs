@@ -1,5 +1,6 @@
 ﻿using FluentValidation.Results;
 using GoodReads.Core.Messages;
+using GoodReads.Core.Results;
 using MediatR;
 
 namespace GoodReads.Core.Mediator

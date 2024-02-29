@@ -1,5 +1,5 @@
 ﻿using GoodReads.Core.Mediator;
-using GoodReads.Core.Messages;
+using GoodReads.Core.Results;
 using GoodReads.Reviews.Application.Commands;
 using GoodReads.Reviews.Application.Queries;
 using MediatR;

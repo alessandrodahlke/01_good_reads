@@ -2,6 +2,7 @@
 using GoodReads.Books.Domain.Entities;
 using GoodReads.Books.Domain.Repositories;
 using GoodReads.Core.Messages;
+using GoodReads.Core.Results;
 using MediatR;
 using static GoodReads.Books.Application.Events.BookUpdatedEvent;
 

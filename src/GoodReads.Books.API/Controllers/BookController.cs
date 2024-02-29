@@ -1,10 +1,10 @@
 ﻿using GoodReads.Books.Application.Commands;
 using GoodReads.Books.Application.DTO;
 using GoodReads.Books.Application.Queries;
-using GoodReads.Core.Communication;
 using GoodReads.Core.Mediator;
-using GoodReads.Core.Messages;
+using GoodReads.Core.Results;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using System.Net;
 
 namespace GoodReads.Books.API.Controllers
@@ -13,11 +13,13 @@ namespace GoodReads.Books.API.Controllers
     [Route("api/book")]
     public class BookController : ControllerBase
     {
+        private readonly ILogger<BookController> _logger;
         private readonly IMediatorHandler _mediator;
 
-        public BookController(IMediatorHandler mediator)
+        public BookController(IMediatorHandler mediator, ILogger<BookController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -25,7 +27,13 @@ namespace GoodReads.Books.API.Controllers
         [ProducesResponseType(typeof(CustomResult), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Create([FromBody] CreateBookCommand command)
         {
+            _logger.LogInformation(
+                "Creating a new book: {@command}", command);
+
             var result = await _mediator.EnviarComando(command);
+
+            _logger.LogInformation(
+                "Book created: {@result}", result);
 
             if (result.IsSuccess)
                 return Ok(result);

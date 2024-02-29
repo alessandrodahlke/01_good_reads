@@ -1,7 +1,7 @@
 ﻿using GoodReads.Books.Application.Commands;
 using GoodReads.Books.Application.Queries;
 using GoodReads.Core.Mediator;
-using GoodReads.Core.Messages;
+using GoodReads.Core.Results;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 

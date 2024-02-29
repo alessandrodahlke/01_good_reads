@@ -1,5 +1,6 @@
 ﻿using GoodReads.Core.Mediator;
 using GoodReads.Core.Messages;
+using GoodReads.Core.Results;
 using GoodReads.Reviews.Application.Events;
 using GoodReads.Reviews.Domain.Entities;
 using GoodReads.Reviews.Domain.Repositories;

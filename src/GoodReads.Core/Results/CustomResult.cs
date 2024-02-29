@@ -1,8 +1,8 @@
-﻿namespace GoodReads.Core.Messages
+﻿namespace GoodReads.Core.Results
 {
     public class CustomResult
     {
-        private CustomResult(bool isSuccess, string message, string[] errors = null, object data = null) 
+        private CustomResult(bool isSuccess, string message, string[] errors = null, object data = null)
         {
             IsSuccess = isSuccess;
             Message = message;

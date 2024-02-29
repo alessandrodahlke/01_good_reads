@@ -1,4 +1,4 @@
-﻿namespace GoodReads.Core.Communication
+﻿namespace GoodReads.Core.Results
 {
     public class PagedResult<T> where T : class
     {

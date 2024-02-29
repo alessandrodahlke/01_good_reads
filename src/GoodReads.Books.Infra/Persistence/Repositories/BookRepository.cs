@@ -1,7 +1,7 @@
 ﻿using GoodReads.Books.Domain.Entities;
 using GoodReads.Books.Domain.Repositories;
-using GoodReads.Core.Communication;
 using GoodReads.Core.Data;
+using GoodReads.Core.Results;
 using Microsoft.EntityFrameworkCore;
 
 namespace GoodReads.Books.Infra.Persistence.Repositories

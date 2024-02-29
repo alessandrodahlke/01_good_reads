@@ -1,6 +1,6 @@
 ﻿using GoodReads.Books.Domain.Entities;
-using GoodReads.Core.Communication;
 using GoodReads.Core.Data;
+using GoodReads.Core.Results;
 
 namespace GoodReads.Books.Domain.Repositories
 {

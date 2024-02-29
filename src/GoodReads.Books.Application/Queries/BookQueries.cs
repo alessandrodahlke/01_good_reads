@@ -1,6 +1,6 @@
 ﻿using GoodReads.Books.Application.DTO;
 using GoodReads.Books.Domain.Repositories;
-using GoodReads.Core.Communication;
+using GoodReads.Core.Results;
 
 namespace GoodReads.Books.Application.Queries
 {
