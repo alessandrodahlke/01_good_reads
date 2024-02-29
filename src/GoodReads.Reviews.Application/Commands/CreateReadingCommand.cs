@@ -18,15 +18,10 @@ namespace GoodReads.Reviews.Application.Commands
         public DateTime StartedDate { get; private set; }
         public DateTime? EndedDate { get; private set; }
 
-        override public bool IsValid()
+        public override bool IsValid()
         {
             ValidationResult = new CreateReadingCommandValidation().Validate(this);
             return ValidationResult.IsValid;
-        }
-
-        public string[] GetErrors()
-        {
-            return ValidationResult.Errors.Select(e => e.ErrorMessage).ToArray();
         }
     }
 

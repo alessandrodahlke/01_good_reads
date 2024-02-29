@@ -18,9 +18,9 @@ namespace GoodReads.Core.Messages
             throw new NotImplementedException();
         }
 
-        public virtual string[] GetErrors()
+        public string[] GetErrors()
         {
-            throw new NotImplementedException();
+            return ValidationResult.Errors.Select(e => e.ErrorMessage).ToArray();
         }
     }
 }

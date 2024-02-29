@@ -33,11 +33,6 @@ namespace GoodReads.Books.Application.Commands
             return ValidationResult.IsValid;
         }
 
-        public string[] GetErrors()
-        {
-            return ValidationResult.Errors.Select(x => x.ErrorMessage).ToArray();
-        }
-
         public class CreateBookCommandValidation : AbstractValidator<CreateBookCommand>
         {
             public CreateBookCommandValidation()

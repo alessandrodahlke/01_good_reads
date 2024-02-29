@@ -23,7 +23,7 @@ namespace GoodReads.Reviews.Application.Commands
         public async Task<CustomResult> Handle(CreateReviewCommand message, CancellationToken cancellationToken)
         {
             if (!message.IsValid())
-                return CustomResult.Failure("Invalid Command", GetErrors());
+                return CustomResult.Failure("Invalid Command", message.GetErrors());
 
             var review = new Review(message.Grade, message.Description, message.UserId, message.BookId);
 

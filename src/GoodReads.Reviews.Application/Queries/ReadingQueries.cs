@@ -16,14 +16,7 @@ namespace GoodReads.Reviews.Application.Queries
         {
             var readings = await _readingRepository.GetByUserId(userId);
 
-            return readings.Select(r => new ReadingDTO
-            {
-                Id = r.Id,
-                BookId = r.BookId,
-                UserId = r.UserId,
-                StartedDate = r.StartedDate,
-                EndedDate = r.EndedDate,
-            });
+            return readings.Select(r => new ReadingDTO(r.Id, r.BookId, r.UserId, r.StartedDate, r.EndedDate));
         }
     }
 }
