@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GoodReads.Reviews.Infra.Rabbitmq
+namespace GoodReads.Reviews.Infra.Rabbitmq.Consumers
 {
     public class BookCreatedConsumer : IConsumer<BookCreatedIntegrationEvent>
     {
         public async Task Consume(ConsumeContext<BookCreatedIntegrationEvent> context)
         {
-           await Task.CompletedTask;
+            await Task.CompletedTask;
         }
     }
 }

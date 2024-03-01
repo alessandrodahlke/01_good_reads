@@ -9,9 +9,9 @@ namespace GoodReads.Books.Application.Events
                                     INotificationHandler<BookUpdatedEvent>,
                                     INotificationHandler<BookDeletedEvent>
     {
-        private readonly IPublishEndpoint _messageBus;
+        private readonly IMessageBus _messageBus;
 
-        public BookEventHandler(IPublishEndpoint messageBus)
+        public BookEventHandler(IMessageBus messageBus)
         {
             _messageBus = messageBus;
         }
@@ -19,7 +19,7 @@ namespace GoodReads.Books.Application.Events
         public async Task Handle(BookCreatedEvent notification, CancellationToken cancellationToken)
         {
             //Publicar evento de integração
-            await _messageBus.Publish(new BookCreatedIntegrationEvent(notification.Id, notification.Title, notification.Author), cancellationToken);
+            await _messageBus.PublishAsync(new BookCreatedIntegrationEvent(notification.Id, notification.Title, notification.Author), cancellationToken);
         }
 
         public Task Handle(BookUpdatedEvent notification, CancellationToken cancellationToken)

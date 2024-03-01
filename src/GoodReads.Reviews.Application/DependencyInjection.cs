@@ -11,6 +11,8 @@ namespace GoodReads.Reviews.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
+            services.AddMediatR(typeof(DependencyInjection).Assembly);
+
             services.AddScoped<IMediatorHandler, MediatorHandler>();
             services.AddScoped<IRequestHandler<CreateReviewCommand, CustomResult>, ReviewCommandHandler>();
             services.AddScoped<IRequestHandler<CreateReadingCommand, CustomResult>, ReadingCommandHandler>();

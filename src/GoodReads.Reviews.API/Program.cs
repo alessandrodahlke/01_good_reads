@@ -1,32 +1,21 @@
+using GoodReads.Reviews.API.Configuration;
 using GoodReads.Reviews.Application;
 using GoodReads.Reviews.Infra;
-using MediatR;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddApplication()
-    .AddInfrastructure(builder.Configuration);
+builder.Services.AddApiConfig()
+                .AddApplication()
+                .AddInfrastructure(builder.Configuration);
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddApplication();
-
-builder.Services.AddMediatR(typeof(Program));
+builder.Host.UseSerilog((context, configuration) =>
+        configuration.ReadFrom.Configuration(context.Configuration));
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseApiConfig(app.Environment);
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
+app.UseSerilogRequestLogging();
 
 app.Run();

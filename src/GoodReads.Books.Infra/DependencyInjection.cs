@@ -44,8 +44,6 @@ namespace GoodReads.Books.Infra
                     });
 
                     cfg.ConfigureEndpoints(context);
-
-
                 });
             });
 

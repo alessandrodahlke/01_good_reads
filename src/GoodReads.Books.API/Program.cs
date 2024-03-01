@@ -10,10 +10,10 @@ builder.Services.AddApiConfig()
                 .AddApplication()
                 .AddInfrastructure(builder.Configuration);
 
-builder.Services.AddMediatR(typeof(Program));
-
 builder.Host.UseSerilog((context, configuration) => 
         configuration.ReadFrom.Configuration(context.Configuration));
+
+builder.Services.AddMediatR(typeof(Program));
 
 var app = builder.Build();
 
