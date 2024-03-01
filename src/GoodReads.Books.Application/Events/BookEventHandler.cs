@@ -1,4 +1,7 @@
-﻿using MediatR;
+﻿using GoodReads.Core.MessageBus;
+using GoodReads.Core.Messages.Integration;
+using MassTransit;
+using MediatR;
 
 namespace GoodReads.Books.Application.Events
 {
@@ -6,11 +9,17 @@ namespace GoodReads.Books.Application.Events
                                     INotificationHandler<BookUpdatedEvent>,
                                     INotificationHandler<BookDeletedEvent>
     {
-        public Task Handle(BookCreatedEvent notification, CancellationToken cancellationToken)
+        private readonly IPublishEndpoint _messageBus;
+
+        public BookEventHandler(IPublishEndpoint messageBus)
+        {
+            _messageBus = messageBus;
+        }
+
+        public async Task Handle(BookCreatedEvent notification, CancellationToken cancellationToken)
         {
             //Publicar evento de integração
-
-            return Task.CompletedTask;
+            await _messageBus.Publish(new BookCreatedIntegrationEvent(notification.Id, notification.Title, notification.Author), cancellationToken);
         }
 
         public Task Handle(BookUpdatedEvent notification, CancellationToken cancellationToken)

@@ -8,7 +8,7 @@ namespace GoodReads.Reviews.Domain.Entities
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string? Id { get; set; }
+        public string Id { get; set; }
         public Guid BookId { get; private set; }
         public Guid UserId { get; private set; }
         public DateTime StartedDate { get; private set; }

@@ -6,16 +6,18 @@ namespace GoodReads.Reviews.Infra.Persistence.Repositories
 {
     public class ReviewRepository : IReviewRepository
     {
-        private readonly IMongoCollection<Review> _collection;
+        private readonly IMongoContext _context;
 
-        public ReviewRepository(IMongoDatabase mongoDatabase)
+        private readonly IMongoCollection<Review> _collection;
+        public ReviewRepository(IMongoContext context)
         {
-            _collection = mongoDatabase.GetCollection<Review>("reviews");
+            _context = context;
+            _collection = context.GetCollection<Review>("reviews");
         }
 
         public async Task Add(Review review)
         {
-            await _collection.InsertOneAsync(review);
+            _context.AddCommand(() => _collection.InsertOneAsync(review));
         }
 
         public async Task<List<Review>> GetByBookId(Guid bookId)
@@ -26,6 +28,11 @@ namespace GoodReads.Reviews.Infra.Persistence.Repositories
         public async Task<Review> GetById(string id)
         {
             return await _collection.Find(r => r.Id == id).SingleOrDefaultAsync();
+        }
+
+        public void Dispose()
+        {
+            _context?.Dispose();
         }
     }
 }

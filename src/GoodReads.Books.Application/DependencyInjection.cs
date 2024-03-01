@@ -1,4 +1,5 @@
 ﻿using GoodReads.Books.Application.Commands;
+using GoodReads.Books.Application.Events;
 using GoodReads.Books.Application.Queries;
 using GoodReads.Core.Mediator;
 using GoodReads.Core.Results;
@@ -15,6 +16,9 @@ namespace GoodReads.Books.Application
             services.AddScoped<IRequestHandler<CreateBookCommand, CustomResult>, BookCommandHandler>();
             services.AddScoped<IRequestHandler<UpdateBookCommand, CustomResult>, BookCommandHandler>();
             services.AddScoped<IRequestHandler<DeleteBookCommand, CustomResult>, BookCommandHandler>();
+            services.AddScoped<INotificationHandler<BookCreatedEvent>, BookEventHandler>();
+            services.AddScoped<INotificationHandler<BookUpdatedEvent>, BookEventHandler>();
+            services.AddScoped<INotificationHandler<BookDeletedEvent>, BookEventHandler>();
             services.AddScoped<IBookQueries, BookQueries>();
 
             return services;

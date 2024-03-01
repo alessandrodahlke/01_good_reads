@@ -1,4 +1,5 @@
-﻿using GoodReads.Core.Mediator;
+﻿using GoodReads.Core.Data;
+using GoodReads.Core.Mediator;
 using GoodReads.Core.Messages;
 using GoodReads.Core.Results;
 using GoodReads.Reviews.Application.Events;
@@ -12,12 +13,15 @@ namespace GoodReads.Reviews.Application.Commands
         IRequestHandler<CreateReviewCommand, CustomResult>
     {
         private readonly IReviewRepository _reviewRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMediatorHandler _mediatorHandler;
 
         public ReviewCommandHandler(IReviewRepository reviewRepository,
+            IUnitOfWork unitOfWork,
             IMediatorHandler mediatorHandler)
         {
             _reviewRepository = reviewRepository;
+            _unitOfWork = unitOfWork;
             _mediatorHandler = mediatorHandler;
         }
 
@@ -30,7 +34,10 @@ namespace GoodReads.Reviews.Application.Commands
 
             await _reviewRepository.Add(review);
 
-            //await _mediatorHandler.PublicarEvento(new ReviewCreatedEvent(review.Id, review.Grade, review.Description, review.UserId, review.BookId));
+            var result = await _unitOfWork.Commit();
+
+            if (result)
+                await _mediatorHandler.PublicarEvento(new ReviewCreatedEvent(review.Id!, review.Grade, review.Description, review.UserId, review.BookId));
 
             return CustomResult.Success("Review created successfully", review);
         }
