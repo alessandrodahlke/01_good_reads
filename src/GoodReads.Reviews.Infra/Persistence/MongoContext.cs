@@ -11,9 +11,9 @@ namespace GoodReads.Reviews.Infra.Persistence
         public IClientSessionHandle Session { get; set; }
         public MongoClient MongoClient { get; set; }
 
-        private ReviewStoreDatabaseSettings Settings { get; set; }
+        private MongoConfig Settings { get; set; }
 
-        public MongoContext(ReviewStoreDatabaseSettings settings)
+        public MongoContext(MongoConfig settings)
         {
             Settings = settings;
             ConfigureMongo();

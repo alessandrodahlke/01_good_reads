@@ -1,26 +1,30 @@
 ﻿using GoodReads.Core.Mediator;
+using GoodReads.Core.Results;
 using GoodReads.Reviews.Application.Commands;
 using GoodReads.Reviews.Application.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoodReads.Reviews.API.Controllers
 {
-    [Route("api/review")]
+    [Route("api/books")]
     [ApiController]
-    public class ReviewController : ControllerBase
+    public class BookController : ControllerBase
     {
         private readonly IMediatorHandler _mediatorHandler;
 
-        public ReviewController(IMediatorHandler mediatorHandler)
+        public BookController(IMediatorHandler mediatorHandler)
         {
             _mediatorHandler = mediatorHandler;
         }
 
-        [HttpPost]
+        [HttpPost("{id}/reviews")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateReview([FromBody] CreateReviewCommand command)
+        public async Task<IActionResult> CreateReview(Guid id, [FromBody] CreateReviewCommand command)
         {
+            if (command.BookId != id)
+                return BadRequest(CustomResult.Failure("Id not equals Command.Id"));
+
             var result = await _mediatorHandler.EnviarComando(command);
 
             if (result.IsSuccess)
@@ -29,18 +33,17 @@ namespace GoodReads.Reviews.API.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("{bookId}")]
+        [HttpGet("{id}/reviews")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetReviewsByBookId(Guid bookId, [FromServices] IReviewQueries reviewQueries)
+        public async Task<IActionResult> GetReviewsByBookId(Guid id, [FromServices] IBookQueries reviewQueries)
         {
-            var reviews = await reviewQueries.GetReviewsByBookIdAsync(bookId);
+            var reviews = await reviewQueries.GetByIdAsync(id);
 
-            if (reviews.Any())
-                return Ok(reviews);
+            if (reviews is null)
+                return NotFound();
 
-            return NotFound();
+            return Ok(reviews);
         }
-
     }
 }

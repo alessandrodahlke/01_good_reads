@@ -4,7 +4,6 @@ using GoodReads.Books.Domain.Repositories;
 using GoodReads.Core.Messages;
 using GoodReads.Core.Results;
 using MediatR;
-using static GoodReads.Books.Application.Events.BookUpdatedEvent;
 
 namespace GoodReads.Books.Application.Commands
 {
@@ -32,12 +31,15 @@ namespace GoodReads.Books.Application.Commands
             var book = new Book(message.Title, message.Description, message.ISBN, message.Author, message.Publisher, message.Gender, message.Year, message.NumberOfPages);
             await _bookRepository.Add(book);
 
-            book.AddEvent(new BookCreatedEvent(book.Id, book.Title, book.Author, book.ISBN, book.Publisher, book.Gender, book.Year, book.NumberOfPages));
+            book.AddEvent(new BookCreatedEvent(book.Id, book.Title, book.Description, book.Author, book.ISBN, book.Publisher, book.Gender, book.Year, book.NumberOfPages));
 
             var result = await _bookRepository.UnitOfWork.Commit();
 
-            return CustomResult.Success("Book created successfully",
-                new CreateBookResponse(book.Id, book.Title, book.Description, book.ISBN, book.Author, book.Publisher, book.Gender, book.Year, book.NumberOfPages));
+            if (result)
+                return CustomResult.Success("Book created successfully",
+                    new CreateBookResponse(book.Id, book.Title, book.Description, book.ISBN, book.Author, book.Publisher, book.Gender, book.Year, book.NumberOfPages));
+
+            return CustomResult.Failure("Error creating book", GetErrors());
         }
 
         public async Task<CustomResult> Handle(UpdateBookCommand message, CancellationToken cancellationToken)
@@ -60,6 +62,7 @@ namespace GoodReads.Books.Application.Commands
             book.AddEvent(new BookUpdatedEvent(book.Id, book.Title, book.Author, book.ISBN, book.Publisher, book.Gender, book.Year, book.NumberOfPages));
 
             var result = await _bookRepository.UnitOfWork.Commit();
+
             if (result)
                 return CustomResult.Success("Successfully Updated");
 

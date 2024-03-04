@@ -1,6 +1,8 @@
 ﻿using GoodReads.Core.Mediator;
+using GoodReads.Core.Messages.Integration;
 using GoodReads.Core.Results;
 using GoodReads.Reviews.Application.Commands;
+using GoodReads.Reviews.Application.Events;
 using GoodReads.Reviews.Application.Queries;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,8 +18,9 @@ namespace GoodReads.Reviews.Application
             services.AddScoped<IMediatorHandler, MediatorHandler>();
             services.AddScoped<IRequestHandler<CreateReviewCommand, CustomResult>, ReviewCommandHandler>();
             services.AddScoped<IRequestHandler<CreateReadingCommand, CustomResult>, ReadingCommandHandler>();
-            services.AddScoped<IReviewQueries, ReviewQueries>();
+            services.AddScoped<IBookQueries, BookQueries>();
             services.AddScoped<IReadingQueries, ReadingQueries>();
+            services.AddScoped<INotificationHandler<BookCreatedIntegrationEvent>, BookIntegrationHandler>();
 
             return services;
         }

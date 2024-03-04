@@ -8,6 +8,7 @@ namespace GoodReads.Books.Application.Events
         public Guid Id { get; private set; }
         public string Title { get; private set; }
         public string Author { get; private set; }
+        public string Description { get; private set; }
         public string ISBN { get; private set; }
         public string Publisher { get; private set; }
         public EGenderBook Gender { get; private set; }
@@ -15,11 +16,12 @@ namespace GoodReads.Books.Application.Events
         public int NumberOfPages { get; private set; }
 
 
-        public BookCreatedEvent(Guid id, string title, string author, string isbn, string publisher, EGenderBook gender, int year, int numberOfPages)
+        public BookCreatedEvent(Guid id, string title, string description,string author, string isbn, string publisher, EGenderBook gender, int year, int numberOfPages)
         {
             AggregateId = id;
             Id = id;
             Title = title;
+            Description = description;
             Author = author;
             ISBN = isbn;
             Publisher = publisher;

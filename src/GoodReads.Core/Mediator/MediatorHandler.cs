@@ -1,5 +1,4 @@
-﻿using FluentValidation.Results;
-using GoodReads.Core.Messages;
+﻿using GoodReads.Core.Messages;
 using GoodReads.Core.Results;
 using MediatR;
 
@@ -18,7 +17,7 @@ namespace GoodReads.Core.Mediator
             return await _mediator.Send(command);
         }
 
-        public async Task PublicarEvento<T>(T @event) where T : DomainEvent
+        public async Task PublicarEvento<T>(T @event) where T : Event
         {
             await _mediator.Publish(@event);
         }

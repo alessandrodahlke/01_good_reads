@@ -1,18 +1,21 @@
-﻿using GoodReads.Core.Messages.Integration;
+﻿using GoodReads.Core.Mediator;
+using GoodReads.Core.Messages.Integration;
 using MassTransit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GoodReads.Reviews.Infra.Rabbitmq.Consumers
 {
     public class BookCreatedConsumer : IConsumer<BookCreatedIntegrationEvent>
     {
+        private readonly IMediatorHandler _mediatorHandler;
+
+        public BookCreatedConsumer(IMediatorHandler mediatorHandler)
+        {
+            _mediatorHandler = mediatorHandler;
+        }
+
         public async Task Consume(ConsumeContext<BookCreatedIntegrationEvent> context)
         {
-            await Task.CompletedTask;
+            await _mediatorHandler.PublicarEvento(context.Message);
         }
     }
 }

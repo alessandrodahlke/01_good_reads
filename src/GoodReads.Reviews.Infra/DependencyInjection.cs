@@ -28,7 +28,7 @@ namespace GoodReads.Reviews.Infra
             {
                 var configuration = sp.GetRequiredService<IConfiguration>();
 
-                var options = new ReviewStoreDatabaseSettings
+                var options = new MongoConfig
                 {
                     ConnectionString = configuration.GetSection("MongoDb:ConnectionString").Value ?? throw new ArgumentNullException("MongoDb:ConnectionString"),
                     Database = configuration.GetSection("MongoDb:Database").Value ?? throw new ArgumentNullException("MongoDb:Database")
@@ -48,6 +48,7 @@ namespace GoodReads.Reviews.Infra
         {
             services.AddScoped<IReviewRepository, ReviewRepository>();
             services.AddScoped<IReadingRepository, ReadingRepository>();
+            services.AddScoped<IBookRepository, BookRepository>();
 
             return services;
         }
@@ -58,7 +59,7 @@ namespace GoodReads.Reviews.Infra
             {
                 var configuration = sp.GetRequiredService<IConfiguration>();
 
-                var options = new RabbitMqSettings
+                var options = new RabbitMqConfig
                 {
                     Host = configuration.GetSection("RabbitMq:Host").Value ?? throw new ArgumentNullException("RabbitMq:Host"),
                     Username = configuration.GetSection("RabbitMq:Username").Value ?? throw new ArgumentNullException("RabbitMq:Username"),

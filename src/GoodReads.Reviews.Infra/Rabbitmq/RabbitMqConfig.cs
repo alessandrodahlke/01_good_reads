@@ -1,6 +1,6 @@
 ﻿namespace GoodReads.Reviews.Infra.Rabbitmq
 {
-    public class RabbitMqSettings
+    public class RabbitMqConfig
     {
         public string Host { get; set; } = string.Empty;
         public string Username { get; set; } = string.Empty;

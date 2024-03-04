@@ -10,7 +10,7 @@ using System.Net;
 namespace GoodReads.Books.API.Controllers
 {
     [ApiController]
-    [Route("api/book")]
+    [Route("api/books")]
     public class BookController : ControllerBase
     {
         private readonly ILogger<BookController> _logger;

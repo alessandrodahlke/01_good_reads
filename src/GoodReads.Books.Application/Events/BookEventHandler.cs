@@ -19,7 +19,7 @@ namespace GoodReads.Books.Application.Events
         public async Task Handle(BookCreatedEvent notification, CancellationToken cancellationToken)
         {
             //Publicar evento de integração
-            await _messageBus.PublishAsync(new BookCreatedIntegrationEvent(notification.Id, notification.Title, notification.Author), cancellationToken);
+            await _messageBus.PublishAsync(new BookCreatedIntegrationEvent(notification.Id, notification.Title,notification.Description, notification.Author), cancellationToken);
         }
 
         public Task Handle(BookUpdatedEvent notification, CancellationToken cancellationToken)
