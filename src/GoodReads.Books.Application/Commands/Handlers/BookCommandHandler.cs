@@ -5,7 +5,7 @@ using GoodReads.Core.Messages;
 using GoodReads.Core.Results;
 using MediatR;
 
-namespace GoodReads.Books.Application.Commands
+namespace GoodReads.Books.Application.Commands.Handlers
 {
 
     public class BookCommandHandler : CommandHandler,
@@ -36,8 +36,7 @@ namespace GoodReads.Books.Application.Commands
             var result = await _bookRepository.UnitOfWork.Commit();
 
             if (result)
-                return CustomResult.Success("Book created successfully",
-                    new CreateBookResponse(book.Id, book.Title, book.Description, book.ISBN, book.Author, book.Publisher, book.Gender, book.Year, book.NumberOfPages));
+                return CustomResult.Success("Book created successfully", book.Id);
 
             return CustomResult.Failure("Error creating book", GetErrors());
         }

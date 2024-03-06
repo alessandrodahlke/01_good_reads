@@ -7,7 +7,7 @@ using GoodReads.Reviews.Domain.Entities;
 using GoodReads.Reviews.Domain.Repositories;
 using MediatR;
 
-namespace GoodReads.Reviews.Application.Commands
+namespace GoodReads.Reviews.Application.Commands.Handlers
 {
     public class ReviewCommandHandler : CommandHandler,
         IRequestHandler<CreateReviewCommand, CustomResult>
@@ -38,7 +38,7 @@ namespace GoodReads.Reviews.Application.Commands
 
             //await _bookRepository.Update(book);
 
-            _bookRepository.AddReview(message.BookId.ToString(),review);
+            _bookRepository.AddReview(message.BookId.ToString(), review);
 
             var result = await _unitOfWork.Commit();
 

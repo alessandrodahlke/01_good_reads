@@ -1,4 +1,5 @@
 ﻿using GoodReads.Books.Application.Commands;
+using GoodReads.Books.Application.Commands.Handlers;
 using GoodReads.Books.Application.Events;
 using GoodReads.Books.Application.Queries;
 using GoodReads.Core.Mediator;

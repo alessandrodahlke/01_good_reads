@@ -5,7 +5,7 @@ using GoodReads.Reviews.Domain.Entities;
 using GoodReads.Reviews.Domain.Repositories;
 using MediatR;
 
-namespace GoodReads.Reviews.Application.Commands
+namespace GoodReads.Reviews.Application.Commands.Handlers
 {
     public class ReadingCommandHandler : CommandHandler,
         IRequestHandler<CreateReadingCommand, CustomResult>

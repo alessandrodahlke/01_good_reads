@@ -2,6 +2,7 @@
 using GoodReads.Core.Messages.Integration;
 using GoodReads.Core.Results;
 using GoodReads.Reviews.Application.Commands;
+using GoodReads.Reviews.Application.Commands.Handlers;
 using GoodReads.Reviews.Application.Events;
 using GoodReads.Reviews.Application.Queries;
 using MediatR;
