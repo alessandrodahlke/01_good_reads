@@ -25,7 +25,8 @@ namespace GoodReads.Books.Application.Queries
                 Publisher = b.Publisher,
                 Gender = b.Gender,
                 Year = b.Year,
-                NumberOfPages = b.NumberOfPages
+                NumberOfPages = b.NumberOfPages,
+                AverageGrade = b.AverageGrade
             });
 
             return new PagedResult<BookDTO>
@@ -53,7 +54,8 @@ namespace GoodReads.Books.Application.Queries
                 Publisher = book.Publisher,
                 Gender = book.Gender,
                 Year = book.Year,
-                NumberOfPages = book.NumberOfPages
+                NumberOfPages = book.NumberOfPages,
+                AverageGrade = book.AverageGrade
             };
         }
     }

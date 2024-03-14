@@ -37,6 +37,10 @@ namespace GoodReads.Reviews.Application.Commands
                 .NotEqual(Guid.Empty)
                 .WithMessage("The user id is required");
 
+            RuleFor(c => c.StartedDate)
+                .NotEmpty()
+                .WithMessage("The started date is required");
+
             When(c => c.EndedDate.HasValue, () =>
             {
                 RuleFor(c => c.EndedDate)

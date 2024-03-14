@@ -61,8 +61,9 @@ namespace GoodReads.Books.Application.Commands
                     .IsInEnum();
 
                 RuleFor(c=>c.Year)
-                    .GreaterThan(0)
-                    .WithMessage("The year field must be greater than 0");
+                    .GreaterThan(1900)
+                    .LessThanOrEqualTo(DateTime.Now.Year)
+                    .WithMessage("The year field must be greater than 1900 and less than or equal to the current year");
 
                 RuleFor(c => c.NumberOfPages)
                     .GreaterThan(0)

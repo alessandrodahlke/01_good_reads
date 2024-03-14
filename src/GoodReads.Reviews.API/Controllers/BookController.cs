@@ -45,5 +45,20 @@ namespace GoodReads.Reviews.API.Controllers
 
             return Ok(reviews);
         }
+
+        [HttpPost("{id}/readings")]
+        public async Task<IActionResult> CreateReading(Guid id, [FromBody] CreateReadingCommand command)
+        {
+            if (command.BookId != id)
+                return BadRequest(CustomResult.Failure("Id not equals Command.Id"));
+
+            var result = await _mediatorHandler.EnviarComando(command);
+
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return BadRequest(result);
+        }
+
     }
 }

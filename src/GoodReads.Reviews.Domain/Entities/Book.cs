@@ -23,5 +23,13 @@ namespace GoodReads.Reviews.Domain.Entities
         {
             Reviews.Add(review);
         }
+
+        public decimal CalculateAverageGrade()
+        {
+            if (Reviews.Count == 0)
+                return 0;
+
+            return (decimal)Reviews.Select(r => r.Grade).Average();
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using GoodReads.Books.Domain.Repositories;
 using GoodReads.Books.Infra.Persistence;
 using GoodReads.Books.Infra.Persistence.Repositories;
+using GoodReads.Books.Infra.Rabbitmq.Consumers;
 using GoodReads.Core.MessageBus;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +35,8 @@ namespace GoodReads.Books.Infra
             services.AddMassTransit(x =>
             {
                 x.SetKebabCaseEndpointNameFormatter();
+
+                x.AddConsumer<AverageGradeCalculatedConsumer>();
 
                 x.UsingRabbitMq((context, cfg) =>
                 {

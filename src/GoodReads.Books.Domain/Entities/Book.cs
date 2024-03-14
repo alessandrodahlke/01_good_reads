@@ -41,5 +41,10 @@ namespace GoodReads.Books.Domain.Entities
             Year = year;
             NumberOfPages = numberOfPage;
         }
+
+        public void UpdateAverageGrade(decimal averageGrade)
+        {
+            AverageGrade = averageGrade;
+        }
     }
 }

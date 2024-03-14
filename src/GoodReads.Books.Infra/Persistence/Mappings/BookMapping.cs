@@ -52,7 +52,7 @@ namespace GoodReads.Books.Infra.Persistence.Mappings
 
             builder.Property(c => c.AverageGrade)
                 .IsRequired()
-                .HasColumnType("decimal")
+                .HasColumnType("decimal(15,2)")
                 .HasColumnName("AverageGrade");
 
             builder.Property(c => c.CreatedAt)
