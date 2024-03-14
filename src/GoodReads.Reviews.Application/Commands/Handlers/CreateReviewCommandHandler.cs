@@ -9,14 +9,14 @@ using MediatR;
 
 namespace GoodReads.Reviews.Application.Commands.Handlers
 {
-    public class RatingCommandHandler : CommandHandler,
-        IRequestHandler<CreateRatingCommand, CustomResult>
+    public class CreateReviewCommandHandler : CommandHandler,
+        IRequestHandler<CreateReviewCommand, CustomResult>
     {
         private readonly IBookRepository _bookRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMediatorHandler _mediatorHandler;
 
-        public RatingCommandHandler(IBookRepository bookRepository,
+        public CreateReviewCommandHandler(IBookRepository bookRepository,
             IUnitOfWork unitOfWork,
             IMediatorHandler mediatorHandler)
         {
@@ -25,27 +25,27 @@ namespace GoodReads.Reviews.Application.Commands.Handlers
             _mediatorHandler = mediatorHandler;
         }
 
-        public async Task<CustomResult> Handle(CreateRatingCommand message, CancellationToken cancellationToken)
+        public async Task<CustomResult> Handle(CreateReviewCommand message, CancellationToken cancellationToken)
         {
             if (!message.IsValid())
                 return CustomResult.Failure("Invalid Command", message.GetErrors());
 
-            var rating = new Rating(message.Grade, message.UserId.ToString(), message.BookId.ToString());
+            var review = new Review(message.Description, message.UserId.ToString(), message.BookId.ToString());
 
-            var book = await _bookRepository.GetById(rating.BookId.ToString());
+            //var book = await _bookRepository.GetById(review.BookId.ToString());
 
-            book.AddRating(rating);
+            //book.AddReview(review);
 
-            await _bookRepository.Update(book);
+            //await _bookRepository.Update(book);
 
-            _bookRepository.AddRating(message.BookId.ToString(), rating);
+            _bookRepository.AddReview(message.BookId.ToString(), review);
 
             var result = await _unitOfWork.Commit();
 
             if (result)
-                await _mediatorHandler.Publish(new RatingCreatedEvent(rating.Id!, rating.Grade, rating.UserId, rating.BookId));
+                await _mediatorHandler.Publish(new ReviewCreatedEvent(review.Id!, review.Description, review.UserId, review.BookId));
 
-            return CustomResult.Success("Rating created successfully", rating);
+            return CustomResult.Success("Review created successfully", review);
         }
     }
 }

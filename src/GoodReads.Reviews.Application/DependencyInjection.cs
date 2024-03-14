@@ -17,12 +17,12 @@ namespace GoodReads.Reviews.Application
             services.AddMediatR(typeof(DependencyInjection).Assembly);
 
             services.AddScoped<IMediatorHandler, MediatorHandler>();
-            services.AddScoped<IRequestHandler<CreateReviewCommand, CustomResult>, ReviewCommandHandler>();
-            services.AddScoped<IRequestHandler<CreateReadingCommand, CustomResult>, ReadingCommandHandler>();
-            services.AddScoped<IRequestHandler<CreateRatingCommand, CustomResult>, RatingCommandHandler>();
+            services.AddScoped<IRequestHandler<CreateReviewCommand, CustomResult>, CreateReviewCommandHandler>();
+            services.AddScoped<IRequestHandler<CreateReadingCommand, CustomResult>, CreateReadingCommandHandler>();
+            services.AddScoped<IRequestHandler<CreateRatingCommand, CustomResult>, CreateRatingCommandHandler>();
             services.AddScoped<IBookQueries, BookQueries>();
             services.AddScoped<IReadingQueries, ReadingQueries>();
-            services.AddScoped<INotificationHandler<BookCreatedIntegrationEvent>, BookIntegrationHandler>();
+            //services.AddScoped<INotificationHandler<BookCreatedIntegrationEvent>, BookIntegrationHandler>();
 
             return services;
         }

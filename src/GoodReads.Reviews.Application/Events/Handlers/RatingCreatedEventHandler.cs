@@ -5,11 +5,11 @@ using MediatR;
 
 namespace GoodReads.Reviews.Application.Events.Handlers
 {
-    public class RatingEventHandler : INotificationHandler<RatingCreatedEvent>
+    public class RatingCreatedEventHandler : INotificationHandler<RatingCreatedEvent>
     {
         private readonly IBookRepository _bookRepository;
         private readonly IMessageBus _messageBus;
-        public RatingEventHandler(IBookRepository bookRepository, IMessageBus messageBus)
+        public RatingCreatedEventHandler(IBookRepository bookRepository, IMessageBus messageBus)
         {
             _bookRepository = bookRepository;
             _messageBus = messageBus;

@@ -8,14 +8,14 @@ using MediatR;
 
 namespace GoodReads.Reviews.Application.Commands.Handlers
 {
-    public class ReadingCommandHandler : CommandHandler,
+    public class CreateReadingCommandHandler : CommandHandler,
         IRequestHandler<CreateReadingCommand, CustomResult>
     {
         private readonly IReadingRepository _readingRepository;
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IUnitOfWork _unitOfWork;
 
-        public ReadingCommandHandler(IReadingRepository readingRepository,
+        public CreateReadingCommandHandler(IReadingRepository readingRepository,
                                      IMediatorHandler mediatorHandler,
                                      IUnitOfWork unitOfWork)
         {

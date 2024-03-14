@@ -6,12 +6,12 @@ using MediatR;
 
 namespace GoodReads.Reviews.Application.Events.Handlers
 {
-    public class BookIntegrationHandler : INotificationHandler<BookCreatedIntegrationEvent>
+    public class BookCreatedIntegrationEventHandler : INotificationHandler<BookCreatedIntegrationEvent>
     {
         private readonly IBookRepository _bookRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public BookIntegrationHandler(IBookRepository bookRepository, IUnitOfWork unitOfWork)
+        public BookCreatedIntegrationEventHandler(IBookRepository bookRepository, IUnitOfWork unitOfWork)
         {
             _bookRepository = bookRepository;
             _unitOfWork = unitOfWork;
