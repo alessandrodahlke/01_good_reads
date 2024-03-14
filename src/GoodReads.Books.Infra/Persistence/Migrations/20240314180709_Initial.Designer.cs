@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GoodReads.Books.Infra.Persistence.Migrations
 {
     [DbContext(typeof(BooksContext))]
-    [Migration("20240221170418_Inicial")]
-    partial class Inicial
+    [Migration("20240314180709_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,38 +33,48 @@ namespace GoodReads.Books.Infra.Persistence.Migrations
 
                     b.Property<string>("Author")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("Author");
 
                     b.Property<decimal>("AverageGrade")
-                        .HasColumnType("decimal");
+                        .HasColumnType("decimal(15,2)")
+                        .HasColumnName("AverageGrade");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("CreatedAt");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(5000)")
+                        .HasColumnName("Description");
 
                     b.Property<int>("Gender")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Gender");
 
                     b.Property<string>("ISBN")
                         .IsRequired()
-                        .HasColumnType("varchar(13)");
+                        .HasColumnType("varchar(13)")
+                        .HasColumnName("ISBN");
 
                     b.Property<int>("NumberOfPages")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("NumberOfPages");
 
                     b.Property<string>("Publisher")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("Publisher");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("Title");
 
                     b.Property<int>("Year")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Year");
 
                     b.HasKey("Id");
 
