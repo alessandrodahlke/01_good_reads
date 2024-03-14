@@ -25,7 +25,7 @@ namespace GoodReads.Reviews.API.Controllers
             if (command.BookId != id)
                 return BadRequest(CustomResult.Failure("Id not equals Command.Id"));
 
-            var result = await _mediatorHandler.EnviarComando(command);
+            var result = await _mediatorHandler.SendCommand(command);
 
             if (result.IsSuccess)
                 return Ok(result);
@@ -46,19 +46,48 @@ namespace GoodReads.Reviews.API.Controllers
             return Ok(reviews);
         }
 
-        [HttpPost("{id}/readings")]
-        public async Task<IActionResult> CreateReading(Guid id, [FromBody] CreateReadingCommand command)
+        [HttpPost("{id}/ratings")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreateRating(Guid id, [FromBody] CreateRatingCommand command)
         {
             if (command.BookId != id)
                 return BadRequest(CustomResult.Failure("Id not equals Command.Id"));
 
-            var result = await _mediatorHandler.EnviarComando(command);
+            var result = await _mediatorHandler.SendCommand(command);
 
             if (result.IsSuccess)
                 return Ok(result);
 
             return BadRequest(result);
         }
+
+        [HttpGet("{id}/ratings")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetRatingsByBookId(Guid id, [FromServices] IBookQueries reviewQueries)
+        {
+            var reviews = await reviewQueries.GetByIdAsync(id);
+
+            if (reviews is null)
+                return NotFound();
+
+            return Ok(reviews);
+        }
+
+        //[HttpPost("{id}/readings")]
+        //public async Task<IActionResult> CreateReading(Guid id, [FromBody] CreateReadingCommand command)
+        //{
+        //    if (command.BookId != id)
+        //        return BadRequest(CustomResult.Failure("Id not equals Command.Id"));
+
+        //    var result = await _mediatorHandler.EnviarComando(command);
+
+        //    if (result.IsSuccess)
+        //        return Ok(result);
+
+        //    return BadRequest(result);
+        //}
 
     }
 }

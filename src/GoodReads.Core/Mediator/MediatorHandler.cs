@@ -12,12 +12,12 @@ namespace GoodReads.Core.Mediator
         {
             _mediator = mediator;
         }
-        public async Task<CustomResult> EnviarComando<T>(T command) where T : Command
+        public async Task<CustomResult> SendCommand<T>(T command) where T : Command
         {
             return await _mediator.Send(command);
         }
 
-        public async Task PublicarEvento<T>(T @event) where T : Event
+        public async Task Publish<T>(T @event) where T : Event
         {
             await _mediator.Publish(@event);
         }

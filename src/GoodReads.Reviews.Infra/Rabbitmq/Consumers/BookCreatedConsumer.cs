@@ -15,7 +15,7 @@ namespace GoodReads.Reviews.Infra.Rabbitmq.Consumers
 
         public async Task Consume(ConsumeContext<BookCreatedIntegrationEvent> context)
         {
-            await _mediatorHandler.PublicarEvento(context.Message);
+            await _mediatorHandler.Publish(context.Message);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace GoodReads.Books.Infra.Persistence.Mappings
 
             builder.Property(c => c.Description)
                 .IsRequired()
-                .HasColumnType("varchar(255)")
+                .HasColumnType("varchar(5000)")
                 .HasColumnName("Description");
 
             builder.Property(c => c.ISBN)

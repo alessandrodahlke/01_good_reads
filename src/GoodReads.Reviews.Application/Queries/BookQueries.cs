@@ -16,11 +16,38 @@ namespace GoodReads.Reviews.Application.Queries
         {
             var book = await _bookRepository.GetById(bookId.ToString());
 
+            if (book is null)
+                return null;
 
-            var bookDto = new BookDTO(book.Id, book.Description,book.Description, book.Author, 
-                book.Reviews.Select(r => new ReviewDTO(r.Id, r.Description, r.BookId, r.UserId, r.Grade, r.CreatedAt)).ToList());
+            var bookDto = new BookDTO(book.Id, book.Title, book.Description, book.AverageGrade, book.Author,
+                book.Reviews.Select(r => new ReviewDTO(r.Id, r.Description, r.BookId, r.UserId, r.CreatedAt)).ToList(),
+                book.Ratings.Select(r => new RatingDTO(r.Id, r.Grade, r.BookId, r.UserId, r.CreatedAt)).ToList());
 
             return bookDto;
+        }
+
+        public async Task<IEnumerable<ReviewDTO>> GetReviewsByBookIdAsync(Guid bookId)
+        {
+            var book = await _bookRepository.GetById(bookId.ToString());
+
+            if (book is null)
+                return null;
+
+            var reviewsDto = book.Reviews.Select(r => new ReviewDTO(r.Id, r.Description, r.BookId, r.UserId, r.CreatedAt)).ToList();
+
+            return reviewsDto;
+        }
+
+        public async Task<IEnumerable<RatingDTO>> GetRatingsByBookIdAsync(Guid bookId)
+        {
+            var book = await _bookRepository.GetById(bookId.ToString());
+
+            if (book is null)
+                return null;
+
+            var ratingsDto = book.Ratings.Select(r => new RatingDTO(r.Id, r.Grade, r.BookId, r.UserId, r.CreatedAt)).ToList();
+
+            return ratingsDto;
         }
     }
 }

@@ -3,33 +3,33 @@ using GoodReads.Core.Messages;
 
 namespace GoodReads.Reviews.Application.Commands
 {
-    public class CreateReviewCommand : Command
+    public class CreateRatingCommand : Command
     {
-        public string Description { get; private set; }
+        public int Grade { get; private set; }
         public Guid UserId { get; private set; }
         public Guid BookId { get; private set; }
 
-        public CreateReviewCommand(string description, Guid userId, Guid bookId)
+        public CreateRatingCommand(int grade, Guid userId, Guid bookId)
         {
-            Description = description;
+            Grade = grade;
             UserId = userId;
             BookId = bookId;
         }
 
         public override bool IsValid()
         {
-            ValidationResult = new CreateReviewCommandValidation().Validate(this);
+            ValidationResult = new CreateRatingCommandValidation().Validate(this);
             return ValidationResult.IsValid;
         }
     }
 
-    public class CreateReviewCommandValidation : AbstractValidator<CreateReviewCommand>
+    public class CreateRatingCommandValidation : AbstractValidator<CreateRatingCommand>
     {
-        public CreateReviewCommandValidation()
+        public CreateRatingCommandValidation()
         {
-            RuleFor(c=>c.Description)
-                .NotEmpty()
-                .WithMessage("The description is required");
+            RuleFor(c => c.Grade)
+                .InclusiveBetween(0, 5)
+                .WithMessage("The grade must be between 0 and 5");
 
             RuleFor(c=>c.UserId)
                 .NotEqual(Guid.Empty)

@@ -1,13 +1,9 @@
 ﻿using GoodReads.Core.DomainObjects;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace GoodReads.Reviews.Domain.Entities
 {
-    public class Reading
+    public class Reading : IAgreggateRoot
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
         public Guid BookId { get; private set; }
         public Guid UserId { get; private set; }

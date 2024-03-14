@@ -4,7 +4,7 @@ using GoodReads.Reviews.Domain.Entities;
 using GoodReads.Reviews.Domain.Repositories;
 using MediatR;
 
-namespace GoodReads.Reviews.Application.Events
+namespace GoodReads.Reviews.Application.Events.Handlers
 {
     public class BookIntegrationHandler : INotificationHandler<BookCreatedIntegrationEvent>
     {

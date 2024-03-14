@@ -40,6 +40,15 @@ namespace GoodReads.Reviews.Infra.Persistence.Repositories
             _context.AddCommand(() => _collection.UpdateOneAsync(filter, definition));
         }
 
+        public void AddRating(string id, Rating rating)
+        {
+            var filter = Builders<Book>.Filter.Eq(r => r.Id, id);
+
+            var definition = Builders<Book>.Update.Push(r => r.Ratings, rating);
+
+            _context.AddCommand(() => _collection.UpdateOneAsync(filter, definition));
+        }
+
         public void Dispose()
         {
             _context?.Dispose();

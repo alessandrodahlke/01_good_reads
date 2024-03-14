@@ -42,6 +42,10 @@ namespace GoodReads.Books.Application.Commands
                     .MinimumLength(3)
                     .WithMessage("The title field must be filled");
 
+                RuleFor(c => c.Description)
+                    .MaximumLength(5000)
+                    .WithMessage("The description field must be less than or equal to 5000 characters");
+
                 RuleFor(c => c.Author)
                     .NotEmpty()
                     .MinimumLength(3)

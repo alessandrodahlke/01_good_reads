@@ -8,5 +8,6 @@ namespace GoodReads.Reviews.Domain.Repositories
         Task<Book> GetById(string id);
         Task Update(Book book);
         void AddReview(string id, Review review);
+        void AddRating(string id, Rating rating);
     }
 }

@@ -68,7 +68,7 @@ namespace GoodReads.Books.Infra.Persistence
 
             var tasks = domainEvents
                 .Select(async (domainEvent) => {
-                    await mediator.PublicarEvento(domainEvent);
+                    await mediator.Publish(domainEvent);
                 });
 
             await Task.WhenAll(tasks);

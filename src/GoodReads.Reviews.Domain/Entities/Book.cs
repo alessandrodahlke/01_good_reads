@@ -7,9 +7,11 @@ namespace GoodReads.Reviews.Domain.Entities
         public string Id { get; private set; }
         public string Title { get; private set; }
         public string Description { get; private set; }
+        public decimal AverageGrade { get; private set; }
         public string Author { get; private set; }
 
-        public List<Review> Reviews { get; set; } = new();
+        public List<Review> Reviews { get; private set; } = new();
+        public List<Rating> Ratings { get; private set; } = new();
 
         public Book(string id, string title, string description, string author)
         {
@@ -24,12 +26,18 @@ namespace GoodReads.Reviews.Domain.Entities
             Reviews.Add(review);
         }
 
-        public decimal CalculateAverageGrade()
+        public void AddRating(Rating rating)
         {
-            if (Reviews.Count == 0)
-                return 0;
+            Ratings.Add(rating);
+            CalculateAverageGrade();
+        }
 
-            return (decimal)Reviews.Select(r => r.Grade).Average();
+        public void CalculateAverageGrade()
+        {
+            if (Ratings.Count == 0)
+                return;
+
+            AverageGrade = (decimal)Ratings.Select(r => r.Grade).Average();
         }
     }
 }

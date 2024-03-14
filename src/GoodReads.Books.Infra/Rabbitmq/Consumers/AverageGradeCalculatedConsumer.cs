@@ -1,27 +1,21 @@
-﻿using GoodReads.Books.Domain.Repositories;
+﻿using GoodReads.Core.Mediator;
 using GoodReads.Core.Messages.Integration;
 using MassTransit;
 
 namespace GoodReads.Books.Infra.Rabbitmq.Consumers
 {
-    public class AverageGradeCalculatedConsumer : IConsumer<AverageGradeCalculatedEvent>
+    public class AverageGradeCalculatedConsumer : IConsumer<AverageGradeCalculatedIntegrationEvent>
     {
-        private readonly IBookRepository _bookRepository;
+        private readonly IMediatorHandler _mediatorHandler;
 
-        public AverageGradeCalculatedConsumer(IBookRepository bookRepository)
+        public AverageGradeCalculatedConsumer(IMediatorHandler mediatorHandler)
         {
-            _bookRepository = bookRepository;
+            _mediatorHandler = mediatorHandler;
         }
 
-        public async Task Consume(ConsumeContext<AverageGradeCalculatedEvent> context)
+        public async Task Consume(ConsumeContext<AverageGradeCalculatedIntegrationEvent> context)
         {
-            var book = await _bookRepository.GetById(context.Message.BookId);
-
-            book.UpdateAverageGrade(context.Message.Average);
-
-            _bookRepository.Update(book);
-
-            await _bookRepository.UnitOfWork.Commit();
+           await _mediatorHandler.Publish(context.Message);
         }
     }
 }

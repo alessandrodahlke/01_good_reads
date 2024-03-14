@@ -3,6 +3,7 @@ using GoodReads.Books.Application.Commands.Handlers;
 using GoodReads.Books.Application.Events;
 using GoodReads.Books.Application.Queries;
 using GoodReads.Core.Mediator;
+using GoodReads.Core.Messages.Integration;
 using GoodReads.Core.Results;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,7 @@ namespace GoodReads.Books.Application
             services.AddScoped<INotificationHandler<BookCreatedEvent>, BookEventHandler>();
             services.AddScoped<INotificationHandler<BookUpdatedEvent>, BookEventHandler>();
             services.AddScoped<INotificationHandler<BookDeletedEvent>, BookEventHandler>();
+            services.AddScoped<INotificationHandler<AverageGradeCalculatedIntegrationEvent>, AverageGradeCalculatedIntegrationHandler>();
             services.AddScoped<IBookQueries, BookQueries>();
 
             return services;
