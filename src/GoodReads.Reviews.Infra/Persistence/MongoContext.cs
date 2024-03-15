@@ -17,9 +17,6 @@ namespace GoodReads.Reviews.Infra.Persistence
         {
             Settings = settings;
             ConfigureMongo();
-
-            //MongoClient = new MongoClient(settings.ConnectionString);
-            //Database = MongoClient.GetDatabase(settings.Database);
         }
 
         private void ConfigureMongo()

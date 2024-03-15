@@ -55,19 +55,9 @@ namespace GoodReads.Reviews.Infra
 
         private static IServiceCollection AddRabbitMq(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton(sp =>
-            {
-                var configuration = sp.GetRequiredService<IConfiguration>();
-
-                var options = new RabbitMqConfig
-                {
-                    Host = configuration.GetSection("RabbitMq:Host").Value ?? throw new ArgumentNullException("RabbitMq:Host"),
-                    Username = configuration.GetSection("RabbitMq:Username").Value ?? throw new ArgumentNullException("RabbitMq:Username"),
-                    Password = configuration.GetSection("RabbitMq:Password").Value ?? throw new ArgumentNullException("RabbitMq:Password"),
-                };
-
-                return options;
-            });
+            var host = configuration.GetSection("RabbitMq:Host").Value ?? throw new ArgumentNullException("RabbitMq:Host");
+            var username = configuration.GetSection("RabbitMq:Username").Value ?? throw new ArgumentNullException("RabbitMq:Username");
+            var password = configuration.GetSection("RabbitMq:Password").Value ?? throw new ArgumentNullException("RabbitMq:Password");
 
             services.AddMassTransit(x =>
             {
@@ -77,10 +67,10 @@ namespace GoodReads.Reviews.Infra
 
                 x.UsingRabbitMq((context, cfg) =>
                 {
-                    cfg.Host(new Uri("rabbitmq://localhost"), h =>
+                    cfg.Host(new Uri(host), h =>
                     {
-                        h.Username("guest");
-                        h.Password("guest");
+                        h.Username(username);
+                        h.Password(password);
                     });
 
                     cfg.ConfigureEndpoints(context);

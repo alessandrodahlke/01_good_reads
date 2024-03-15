@@ -17,13 +17,6 @@ namespace GoodReads.Books.Application
             //services.AddMediatR(typeof(DependencyInjection).Assembly);
 
             services.AddScoped<IMediatorHandler, MediatorHandler>();
-            services.AddScoped<IRequestHandler<CreateBookCommand, CustomResult>, BookCommandHandler>();
-            services.AddScoped<IRequestHandler<UpdateBookCommand, CustomResult>, BookCommandHandler>();
-            services.AddScoped<IRequestHandler<DeleteBookCommand, CustomResult>, BookCommandHandler>();
-            services.AddScoped<INotificationHandler<BookCreatedEvent>, BookEventHandler>();
-            services.AddScoped<INotificationHandler<BookUpdatedEvent>, BookEventHandler>();
-            services.AddScoped<INotificationHandler<BookDeletedEvent>, BookEventHandler>();
-            services.AddScoped<INotificationHandler<AverageGradeCalculatedIntegrationEvent>, AverageGradeCalculatedIntegrationHandler>();
             services.AddScoped<IBookQueries, BookQueries>();
 
             return services;
