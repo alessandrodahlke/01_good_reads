@@ -13,14 +13,17 @@ namespace GoodReads.Reviews.Application.Commands.Handlers
         IRequestHandler<CreateReviewCommand, CustomResult>
     {
         private readonly IBookRepository _bookRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMediatorHandler _mediatorHandler;
 
         public CreateReviewCommandHandler(IBookRepository bookRepository,
+            IUserRepository userRepository,
             IUnitOfWork unitOfWork,
             IMediatorHandler mediatorHandler)
         {
             _bookRepository = bookRepository;
+            _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _mediatorHandler = mediatorHandler;
         }
@@ -39,6 +42,7 @@ namespace GoodReads.Reviews.Application.Commands.Handlers
             //await _bookRepository.Update(book);
 
             _bookRepository.AddReview(message.BookId.ToString(), review);
+            _userRepository.AddReview(message.UserId.ToString(), review);
 
             var result = await _unitOfWork.Commit();
 

@@ -1,4 +1,5 @@
 ﻿using GoodReadas.Users.Domain.Entities;
+using GoodReads.Core.DomainObjects.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -20,8 +21,11 @@ namespace GoodReads.Users.Infra.Persistence.Mappings
                 cm.Property(c => c.Address)
                     .IsRequired()
                     .HasColumnName("Email")
-                    .HasColumnType("varchar(255)");
+                    .HasMaxLength(Email.AddressMaxLength)
+                    .HasColumnType($"varchar({Email.AddressMaxLength})");
             });
+
+            builder.ToTable("Users");
         }
     }
 }

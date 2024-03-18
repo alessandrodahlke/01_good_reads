@@ -14,5 +14,7 @@ namespace GoodReadas.Users.Domain.Entities
             Email = new Email(email);
         }
 
+        protected User() { }
+
     }
 }

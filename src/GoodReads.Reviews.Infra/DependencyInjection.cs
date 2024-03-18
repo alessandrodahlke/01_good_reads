@@ -3,7 +3,6 @@ using GoodReads.Core.MessageBus;
 using GoodReads.Reviews.Domain.Repositories;
 using GoodReads.Reviews.Infra.Persistence;
 using GoodReads.Reviews.Infra.Persistence.Repositories;
-using GoodReads.Reviews.Infra.Rabbitmq;
 using GoodReads.Reviews.Infra.Rabbitmq.Consumers;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
@@ -49,6 +48,7 @@ namespace GoodReads.Reviews.Infra
             services.AddScoped<IReviewRepository, ReviewRepository>();
             services.AddScoped<IReadingRepository, ReadingRepository>();
             services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
         }
@@ -64,6 +64,7 @@ namespace GoodReads.Reviews.Infra
                 x.SetKebabCaseEndpointNameFormatter();
 
                 x.AddConsumer<BookCreatedConsumer>();
+                x.AddConsumer<UserCreatedConsumer>();
 
                 x.UsingRabbitMq((context, cfg) =>
                 {

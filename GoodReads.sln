@@ -45,6 +45,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoodReads.Users.Domain", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoodReads.Users.Infra", "src\GoodReads.Users.Infra\GoodReads.Users.Infra.csproj", "{6785F957-0322-4934-A6DE-2CE53E7ABCC2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoodReads.Users.Application", "src\GoodReads.Users.Application\GoodReads.Users.Application.csproj", "{B1C86A94-E9EB-4ABC-B924-BAF8DF9803C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoodReads.Users.API", "src\GoodReads.Users.API\GoodReads.Users.API.csproj", "{1F3E7EEB-6919-44E9-A48F-CE19CD55F053}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +99,14 @@ Global
 		{6785F957-0322-4934-A6DE-2CE53E7ABCC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6785F957-0322-4934-A6DE-2CE53E7ABCC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6785F957-0322-4934-A6DE-2CE53E7ABCC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1C86A94-E9EB-4ABC-B924-BAF8DF9803C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1C86A94-E9EB-4ABC-B924-BAF8DF9803C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1C86A94-E9EB-4ABC-B924-BAF8DF9803C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1C86A94-E9EB-4ABC-B924-BAF8DF9803C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F3E7EEB-6919-44E9-A48F-CE19CD55F053}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F3E7EEB-6919-44E9-A48F-CE19CD55F053}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F3E7EEB-6919-44E9-A48F-CE19CD55F053}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F3E7EEB-6919-44E9-A48F-CE19CD55F053}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -120,6 +132,8 @@ Global
 		{54F0B089-8953-4AF0-BB1E-9D044ACEF9FE} = {3D231961-75F6-4E2C-9497-FD57B81319AD}
 		{23DD25D1-0227-4E77-BB7F-9A2CCFC05CC9} = {CC936AEA-FE4E-43C5-B4A4-A8776FBD2F37}
 		{6785F957-0322-4934-A6DE-2CE53E7ABCC2} = {CC936AEA-FE4E-43C5-B4A4-A8776FBD2F37}
+		{B1C86A94-E9EB-4ABC-B924-BAF8DF9803C8} = {CC936AEA-FE4E-43C5-B4A4-A8776FBD2F37}
+		{1F3E7EEB-6919-44E9-A48F-CE19CD55F053} = {CC936AEA-FE4E-43C5-B4A4-A8776FBD2F37}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {00FB0B50-FD52-4056-B848-0E64BB7CA860}

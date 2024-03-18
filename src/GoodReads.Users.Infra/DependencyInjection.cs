@@ -1,14 +1,13 @@
-﻿using GoodReads.Books.Domain.Repositories;
-using GoodReads.Books.Infra.Persistence;
-using GoodReads.Books.Infra.Persistence.Repositories;
-using GoodReads.Books.Infra.Rabbitmq.Consumers;
+﻿using GoodReadas.Users.Domain.Repositories;
 using GoodReads.Core.MessageBus;
+using GoodReads.Users.Infra.Persistence;
+using GoodReads.Users.Infra.Persistence.Repositories;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace GoodReads.Books.Infra
+namespace GoodReads.Users.Infra
 {
     public static class DependencyInjection
     {
@@ -22,10 +21,10 @@ namespace GoodReads.Books.Infra
 
         private static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<BooksContext>(options =>
+            services.AddDbContext<UsersContext>(options =>
                            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
         }
@@ -39,8 +38,6 @@ namespace GoodReads.Books.Infra
             services.AddMassTransit(x =>
             {
                 x.SetKebabCaseEndpointNameFormatter();
-
-                x.AddConsumer<AverageGradeCalculatedConsumer>();
 
                 x.UsingRabbitMq((context, cfg) =>
                 {
