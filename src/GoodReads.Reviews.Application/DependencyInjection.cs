@@ -13,7 +13,7 @@ namespace GoodReads.Reviews.Application
 
             services.AddScoped<IMediatorHandler, MediatorHandler>();
             services.AddScoped<IBookQueries, BookQueries>();
-            services.AddScoped<IReadingQueries, ReadingQueries>();
+            services.AddScoped<IUserQueries, UserQueries>();
 
             return services;
         }

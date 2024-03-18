@@ -49,6 +49,20 @@ namespace GoodReads.Reviews.Infra.Persistence.Repositories
             _context.AddCommand(() => _collection.UpdateOneAsync(filter, definition));
         }
 
+        public async Task<Book> GetReviewById(string reviewId)
+        {
+           var filter = Builders<Book>.Filter.ElemMatch(r => r.Reviews, r => r.Id == reviewId);
+
+            return await _collection.Find(filter).SingleOrDefaultAsync();
+        }
+
+        public async Task<Book> GetReviewByBookIdAndUserId(string bookId, string userId)
+        {
+           var filter = Builders<Book>.Filter.ElemMatch(r => r.Reviews, r => r.UserId == userId && r.BookId == bookId);
+
+            return await _collection.Find(filter).SingleOrDefaultAsync();
+        }
+
         public void Dispose()
         {
             _context?.Dispose();

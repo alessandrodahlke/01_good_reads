@@ -33,12 +33,15 @@ namespace GoodReads.Reviews.Application.Commands.Handlers
             if (!message.IsValid())
                 return CustomResult.Failure("Invalid Command", message.GetErrors());
 
+            var bookReviews = await _bookRepository.GetReviewByBookIdAndUserId(message.BookId.ToString(), message.UserId.ToString());
+
+            if (bookReviews is not null)
+                return CustomResult.Failure("Review already exists");
+
             var review = new Review(message.Description, message.UserId.ToString(), message.BookId.ToString());
 
             //var book = await _bookRepository.GetById(review.BookId.ToString());
-
             //book.AddReview(review);
-
             //await _bookRepository.Update(book);
 
             _bookRepository.AddReview(message.BookId.ToString(), review);

@@ -1,8 +1,10 @@
 ﻿using GoodReads.Core.Mediator;
 using GoodReads.Core.Results;
 using GoodReads.Reviews.Application.Commands;
+using GoodReads.Reviews.Application.DTO;
 using GoodReads.Reviews.Application.Queries;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace GoodReads.Reviews.API.Controllers
 {
@@ -18,8 +20,8 @@ namespace GoodReads.Reviews.API.Controllers
         }
 
         [HttpPost("{id}/reviews")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(CustomResult), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(CustomResult), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> CreateReview(Guid id, [FromBody] CreateReviewCommand command)
         {
             if (command.BookId != id)
@@ -34,11 +36,37 @@ namespace GoodReads.Reviews.API.Controllers
         }
 
         [HttpGet("{id}/reviews")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetReviewsByBookId(Guid id, [FromServices] IBookQueries reviewQueries)
+        [ProducesResponseType(typeof(BookDTO), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> GetReviewsByBookId(Guid id, [FromServices] IBookQueries bookQueries)
         {
-            var reviews = await reviewQueries.GetByIdAsync(id);
+            var reviews = await bookQueries.GetByIdAsync(id);
+
+            if (reviews is null)
+                return NotFound();
+
+            return Ok(reviews);
+        }
+
+        [HttpGet("{bookId}/users/{userId}/reviews")]
+        [ProducesResponseType(typeof(BookDTO), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> GetReviewByBookIdAndUserId(Guid bookId, Guid userId, [FromServices] IBookQueries bookQueries)
+        {
+            var reviews = await bookQueries.GetReviewByBookIdAndUserId(bookId, userId);
+
+            if (reviews is null)
+                return NotFound();
+
+            return Ok(reviews);
+        }
+
+        [HttpGet("reviews/{id}")]
+        [ProducesResponseType(typeof(BookDTO), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> GetReviewById(Guid id, [FromServices] IBookQueries bookQueries)
+        {
+            var reviews = await bookQueries.GetReviewById(id);
 
             if (reviews is null)
                 return NotFound();
@@ -47,8 +75,8 @@ namespace GoodReads.Reviews.API.Controllers
         }
 
         [HttpPost("{id}/ratings")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(CustomResult), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(CustomResult), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> CreateRating(Guid id, [FromBody] CreateRatingCommand command)
         {
             if (command.BookId != id)
@@ -63,31 +91,16 @@ namespace GoodReads.Reviews.API.Controllers
         }
 
         [HttpGet("{id}/ratings")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetRatingsByBookId(Guid id, [FromServices] IBookQueries reviewQueries)
+        [ProducesResponseType(typeof(BookDTO), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> GetRatingsByBookId(Guid id, [FromServices] IBookQueries bookQueries)
         {
-            var reviews = await reviewQueries.GetByIdAsync(id);
+            var reviews = await bookQueries.GetByIdAsync(id);
 
             if (reviews is null)
                 return NotFound();
 
             return Ok(reviews);
         }
-
-        //[HttpPost("{id}/readings")]
-        //public async Task<IActionResult> CreateReading(Guid id, [FromBody] CreateReadingCommand command)
-        //{
-        //    if (command.BookId != id)
-        //        return BadRequest(CustomResult.Failure("Id not equals Command.Id"));
-
-        //    var result = await _mediatorHandler.EnviarComando(command);
-
-        //    if (result.IsSuccess)
-        //        return Ok(result);
-
-        //    return BadRequest(result);
-        //}
-
     }
 }

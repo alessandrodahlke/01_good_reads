@@ -49,5 +49,33 @@ namespace GoodReads.Reviews.Application.Queries
 
             return ratingsDto;
         }
+
+        public async Task<BookDTO> GetReviewById(Guid review)
+        {
+            var book = await _bookRepository.GetReviewById(review.ToString());
+
+            if (book is null)
+                return null;
+
+            var bookDto = new BookDTO(book.Id, book.Title, book.Description, book.AverageGrade, book.Author,
+                               book.Reviews.Select(r => new ReviewDTO(r.Id, r.Description, r.BookId, r.UserId, r.CreatedAt)).ToList(),
+                                              book.Ratings.Select(r => new RatingDTO(r.Id, r.Grade, r.BookId, r.UserId, r.CreatedAt)).ToList());
+
+            return bookDto;
+        }
+
+        public async Task<BookDTO> GetReviewByBookIdAndUserId(Guid bookId, Guid userId)
+        {
+            var book = await _bookRepository.GetReviewByBookIdAndUserId(bookId.ToString(), userId.ToString());
+
+            if (book is null)
+                return null;
+
+            var bookDto = new BookDTO(book.Id, book.Title, book.Description, book.AverageGrade, book.Author,
+                                              book.Reviews.Select(r => new ReviewDTO(r.Id, r.Description, r.BookId, r.UserId, r.CreatedAt)).ToList(),
+                                                                                           book.Ratings.Select(r => new RatingDTO(r.Id, r.Grade, r.BookId, r.UserId, r.CreatedAt)).ToList());
+
+            return bookDto;
+        }
     }
 }

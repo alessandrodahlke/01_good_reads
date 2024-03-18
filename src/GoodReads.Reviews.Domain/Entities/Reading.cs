@@ -4,16 +4,15 @@ namespace GoodReads.Reviews.Domain.Entities
 {
     public class Reading : IAgreggateRoot
     {
-        public string Id { get; set; }
-        public Guid BookId { get; private set; }
-        public Guid UserId { get; private set; }
+        public string Id { get; private set; }
+        public Book Book { get; private set; }
         public DateTime StartedDate { get; private set; }
         public DateTime? EndedDate { get; private set; }
 
-        public Reading(Guid bookId, Guid userId, DateTime startedDate, DateTime? endedDate)
+        public Reading(Book book, DateTime startedDate, DateTime? endedDate)
         {
-            BookId = bookId;
-            UserId = userId;
+            Id = Guid.NewGuid().ToString();
+            Book = book;
             StartedDate = startedDate;
             EndedDate = endedDate;
 

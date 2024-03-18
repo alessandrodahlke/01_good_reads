@@ -45,8 +45,6 @@ namespace GoodReads.Reviews.Infra
 
         private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IReviewRepository, ReviewRepository>();
-            services.AddScoped<IReadingRepository, ReadingRepository>();
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
