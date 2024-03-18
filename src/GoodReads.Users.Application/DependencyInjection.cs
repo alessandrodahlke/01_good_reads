@@ -1,4 +1,5 @@
 ﻿using GoodReads.Core.Mediator;
+using GoodReads.Users.Application.Queries;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +12,7 @@ namespace GoodReads.Users.Application
             services.AddMediatR(typeof(DependencyInjection).Assembly);
 
             services.AddScoped<IMediatorHandler, MediatorHandler>();
+            services.AddScoped<IUserQueries, UserQueries>();
 
             return services;
         }

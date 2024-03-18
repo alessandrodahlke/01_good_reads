@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTO\" />
-    <Folder Include="Queries\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\GoodReads.Core\GoodReads.Core.csproj" />
     <ProjectReference Include="..\GoodReads.Users.Domain\GoodReads.Users.Domain.csproj" />
     <ProjectReference Include="..\GoodReads.Users.Infra\GoodReads.Users.Infra.csproj" />
