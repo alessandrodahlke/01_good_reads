@@ -38,7 +38,6 @@ namespace GoodReads.Reviews.Infra
             });
 
             services.AddScoped<IMongoContext, MongoContext>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
         }
@@ -47,6 +46,8 @@ namespace GoodReads.Reviews.Infra
         {
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRatingRepository, RatingRepository>();
+            services.AddScoped<IReadingRepository, ReadingRepository>();
 
             return services;
         }

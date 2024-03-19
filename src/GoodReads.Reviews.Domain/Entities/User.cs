@@ -2,16 +2,13 @@
 
 namespace GoodReads.Reviews.Domain.Entities
 {
-    public class User : IAgreggateRoot
+    public class User : Document, IAgreggateRoot
     {
-        public string Id { get; private set; }
         public string Name { get; private set; }
         public string Email { get; private set; }
 
-        public List<Book> Books { get; private set; } = new();
-        public List<Review> Reviews { get; private set; } = new();
-        public List<Rating> Ratings { get; private set; } = new();
         public List<Reading> Readings { get; private set; } = new();
+        public List<Rating> Ratings { get; private set; } = new();
 
         public User(string id, string name, string email)
         {
@@ -20,9 +17,14 @@ namespace GoodReads.Reviews.Domain.Entities
             Email = email;
         }
 
-        public void AddRading(Reading reading)
+        public void AddReading(Reading reading)
         {
             Readings.Add(reading);
+        }
+
+        public void AddRating(Rating rating)
+        {
+            Ratings.Add(rating);
         }
     }
 }

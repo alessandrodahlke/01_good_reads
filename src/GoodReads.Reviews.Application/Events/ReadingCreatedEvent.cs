@@ -4,7 +4,7 @@ namespace GoodReads.Reviews.Application.Events
 {
     public class ReadingCreatedEvent : DomainEvent
     {
-        public ReadingCreatedEvent(string id, Guid userId, Guid bookId, DateTime startedDate, DateTime? endedDate = null)
+        public ReadingCreatedEvent(string id, string userId, string bookId, DateTime startedDate, DateTime? endedDate = null)
         {
             Id = id;
             UserId = userId;
@@ -14,8 +14,8 @@ namespace GoodReads.Reviews.Application.Events
         }
 
         public string Id { get; private set; }
-        public Guid UserId { get; private set; }
-        public Guid BookId { get; private set; }
+        public string UserId { get; private set; }
+        public string BookId { get; private set; }
         public DateTime StartedDate { get; private set; }
         public DateTime? EndedDate { get; private set; }
 

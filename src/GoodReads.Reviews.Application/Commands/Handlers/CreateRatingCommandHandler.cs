@@ -1,5 +1,4 @@
-﻿using GoodReads.Core.Data;
-using GoodReads.Core.Mediator;
+﻿using GoodReads.Core.Mediator;
 using GoodReads.Core.Messages;
 using GoodReads.Core.Results;
 using GoodReads.Reviews.Application.Events;
@@ -13,18 +12,18 @@ namespace GoodReads.Reviews.Application.Commands.Handlers
         IRequestHandler<CreateRatingCommand, CustomResult>
     {
         private readonly IBookRepository _bookRepository;
+        private readonly IRatingRepository _ratingRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IMediatorHandler _mediatorHandler;
 
         public CreateRatingCommandHandler(IBookRepository bookRepository,
+            IRatingRepository ratingRepository,
             IUserRepository userRepository,
-            IUnitOfWork unitOfWork,
             IMediatorHandler mediatorHandler)
         {
             _bookRepository = bookRepository;
+            _ratingRepository = ratingRepository;
             _userRepository = userRepository;
-            _unitOfWork = unitOfWork;
             _mediatorHandler = mediatorHandler;
         }
 
@@ -33,19 +32,23 @@ namespace GoodReads.Reviews.Application.Commands.Handlers
             if (!message.IsValid())
                 return CustomResult.Failure("Invalid Command", message.GetErrors());
 
-            var rating = new Rating(message.Grade, message.UserId.ToString(), message.BookId.ToString());
+            var user = await _userRepository.GetById(message.UserId.ToString());
+            if (user == null)
+                return CustomResult.Failure("The user does not exist", GetErrors());
 
-            var book = await _bookRepository.GetById(rating.BookId.ToString());
-            book.AddRating(rating);
-            await _bookRepository.Update(book);
+            var book = await _bookRepository.GetById(message.BookId.ToString());
+            if (book == null)
+                return CustomResult.Failure("The book does not exist", GetErrors());
 
-            //_bookRepository.AddRating(message.BookId.ToString(), rating);
-            _userRepository.AddRating(message.UserId.ToString(), rating);
+            var ratingExists = await _ratingRepository.GetByUserAndBook(user.Id, book.Id);
+            if (ratingExists != null)
+                return CustomResult.Failure("The user has already rated this book", GetErrors());
 
-            var result = await _unitOfWork.Commit();
+            var rating = new Rating(message.Grade, message.Description, user.Id, book.Id);
 
-            if (result)
-                await _mediatorHandler.Publish(new RatingCreatedEvent(rating.Id!, rating.Grade, rating.UserId, rating.BookId));
+            await _ratingRepository.Add(rating);
+
+            await _mediatorHandler.Publish(new RatingCreatedEvent(rating.Id!, rating.Grade, user.Id, book.Id));
 
             return CustomResult.Success("Rating created successfully", rating);
         }

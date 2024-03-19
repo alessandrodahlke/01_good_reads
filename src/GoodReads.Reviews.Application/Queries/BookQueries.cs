@@ -6,76 +6,49 @@ namespace GoodReads.Reviews.Application.Queries
     public class BookQueries : IBookQueries
     {
         private readonly IBookRepository _bookRepository;
+        private readonly IRatingRepository _ratingRepository;
 
-        public BookQueries(IBookRepository bookRepository)
+        public BookQueries(IBookRepository bookRepository, IRatingRepository ratingRepository)
         {
             _bookRepository = bookRepository;
+            _ratingRepository = ratingRepository;
         }
 
-        public async Task<BookDTO> GetByIdAsync(Guid bookId)
+        public async Task<RatingDTO> GetByIdAsync(Guid id)
         {
-            var book = await _bookRepository.GetById(bookId.ToString());
+            var rating = await _ratingRepository.GetById(id.ToString());
 
-            if (book is null)
+            if (rating is null)
                 return null;
 
-            var bookDto = new BookDTO(book.Id, book.Title, book.Description, book.AverageGrade, book.Author,
-                book.Reviews.Select(r => new ReviewDTO(r.Id, r.Description, r.BookId, r.UserId, r.CreatedAt)).ToList(),
-                book.Ratings.Select(r => new RatingDTO(r.Id, r.Grade, r.BookId, r.UserId, r.CreatedAt)).ToList());
+            var bookDto = new RatingDTO(rating.Id, rating.Grade, rating.Description, rating.UserId, rating.BookId, rating.CreatedAt);
 
             return bookDto;
-        }
-
-        public async Task<IEnumerable<ReviewDTO>> GetReviewsByBookIdAsync(Guid bookId)
-        {
-            var book = await _bookRepository.GetById(bookId.ToString());
-
-            if (book is null)
-                return null;
-
-            var reviewsDto = book.Reviews.Select(r => new ReviewDTO(r.Id, r.Description, r.BookId, r.UserId, r.CreatedAt)).ToList();
-
-            return reviewsDto;
         }
 
         public async Task<IEnumerable<RatingDTO>> GetRatingsByBookIdAsync(Guid bookId)
         {
-            var book = await _bookRepository.GetById(bookId.ToString());
+            var ratings = await _ratingRepository.GetByBookId(bookId.ToString());
 
-            if (book is null)
+            if (ratings is null)
                 return null;
 
-            var ratingsDto = book.Ratings.Select(r => new RatingDTO(r.Id, r.Grade, r.BookId, r.UserId, r.CreatedAt)).ToList();
+            var ratingsDto = ratings.Select(r => new RatingDTO(r.Id, r.Grade, r.Description, r.UserId, r.BookId, r.CreatedAt)).ToList();
 
             return ratingsDto;
         }
 
-        public async Task<BookDTO> GetReviewById(Guid review)
+        public async Task<IEnumerable<RatingDTO>> GetRatingsByUserIdAsync(Guid userId)
         {
-            var book = await _bookRepository.GetReviewById(review.ToString());
+            var ratings = await _ratingRepository.GetByUserId(userId.ToString());
 
-            if (book is null)
+            if (ratings is null)
                 return null;
 
-            var bookDto = new BookDTO(book.Id, book.Title, book.Description, book.AverageGrade, book.Author,
-                               book.Reviews.Select(r => new ReviewDTO(r.Id, r.Description, r.BookId, r.UserId, r.CreatedAt)).ToList(),
-                                              book.Ratings.Select(r => new RatingDTO(r.Id, r.Grade, r.BookId, r.UserId, r.CreatedAt)).ToList());
+            var ratingsDto = ratings.Select(r => new RatingDTO(r.Id, r.Grade, r.Description, r.UserId, r.BookId, r.CreatedAt)).ToList();
 
-            return bookDto;
+            return ratingsDto;
         }
 
-        public async Task<BookDTO> GetReviewByBookIdAndUserId(Guid bookId, Guid userId)
-        {
-            var book = await _bookRepository.GetReviewByBookIdAndUserId(bookId.ToString(), userId.ToString());
-
-            if (book is null)
-                return null;
-
-            var bookDto = new BookDTO(book.Id, book.Title, book.Description, book.AverageGrade, book.Author,
-                                              book.Reviews.Select(r => new ReviewDTO(r.Id, r.Description, r.BookId, r.UserId, r.CreatedAt)).ToList(),
-                                                                                           book.Ratings.Select(r => new RatingDTO(r.Id, r.Grade, r.BookId, r.UserId, r.CreatedAt)).ToList());
-
-            return bookDto;
-        }
     }
 }

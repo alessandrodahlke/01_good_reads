@@ -2,21 +2,19 @@
 
 namespace GoodReads.Reviews.Domain.Entities
 {
-    public class Rating : IAgreggateRoot
+    public class Rating : Document
     {
-        public string Id { get; private set; }
-        public int Grade { get; private set; }
-        public string UserId { get; private set; }
-        public string BookId { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-
-        public Rating(int grade, string userId, string bookId)
+        public Rating(int grade, string description, string userId, string bookId)
         {
-            Id = Guid.NewGuid().ToString();
             Grade = grade;
+            Description = description;
             UserId = userId;
             BookId = bookId;
-            CreatedAt = DateTime.Now;
         }
+
+        public int Grade { get; private set; }
+        public string Description { get; private set; }
+        public string UserId { get; private set; }
+        public string BookId { get; private set; }
     }
 }

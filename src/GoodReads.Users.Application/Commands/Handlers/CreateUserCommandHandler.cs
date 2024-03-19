@@ -20,7 +20,7 @@ namespace GoodReads.Users.Application.Commands.Handlers
         {
             if (!request.IsValid())
                 return CustomResult.Failure("Invalid command", request.GetErrors());
-            
+
             var userExists = await _userRepository.GetByEmail(request.Email);
             if (userExists != null)
                 return CustomResult.Failure("User already exists");
@@ -33,7 +33,7 @@ namespace GoodReads.Users.Application.Commands.Handlers
             var result = await _userRepository.UnitOfWork.Commit();
 
             if (result)
-                return CustomResult.Success("User created successfully");
+                return CustomResult.Success("User created successfully", user.Id);
 
             return CustomResult.Failure("Error creating user");
         }

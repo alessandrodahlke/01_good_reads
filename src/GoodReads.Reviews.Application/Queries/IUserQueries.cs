@@ -24,10 +24,7 @@ namespace GoodReads.Reviews.Application.Queries
             if (user is null)
                 return null;
 
-            return new UserDTO(user.Id, user.Name, user.Readings.Select(x =>
-            new ReadingDTO(x.Id, 
-            new BookDTO(x.Book.Id, x.Book.Title, x.Book.Description, x.Book.AverageGrade, x.Book.Author), x.StartedDate, x.EndedDate))
-                .ToList());
+            return new UserDTO(user.Id, user.Name);
         }
     }
 }

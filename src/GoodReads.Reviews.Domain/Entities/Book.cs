@@ -2,15 +2,13 @@
 
 namespace GoodReads.Reviews.Domain.Entities
 {
-    public class Book : IAgreggateRoot
+    public class Book : Document, IAgreggateRoot
     {
-        public string Id { get; private set; }
         public string Title { get; private set; }
         public string Description { get; private set; }
         public decimal AverageGrade { get; private set; }
         public string Author { get; private set; }
 
-        public List<Review> Reviews { get; private set; } = new();
         public List<Rating> Ratings { get; private set; } = new();
 
         public Book(string id, string title, string description, string author)
@@ -21,9 +19,9 @@ namespace GoodReads.Reviews.Domain.Entities
             Author = author;
         }
 
-        public void AddReview(Review review)
+        public void UpdateAverageGrade(decimal averageGrade)
         {
-            Reviews.Add(review);
+            AverageGrade = averageGrade;
         }
 
         public void AddRating(Rating rating)

@@ -1,5 +1,4 @@
-﻿using GoodReads.Core.Data;
-using GoodReads.Core.Mediator;
+﻿using GoodReads.Core.Mediator;
 using GoodReads.Core.Messages;
 using GoodReads.Core.Results;
 using GoodReads.Reviews.Application.Events;
@@ -14,18 +13,18 @@ namespace GoodReads.Reviews.Application.Commands.Handlers
     {
         private readonly IUserRepository _userRepository;
         private readonly IBookRepository _bookRepository;
+        private readonly IReadingRepository _readingRepository;
         private readonly IMediatorHandler _mediatorHandler;
-        private readonly IUnitOfWork _unitOfWork;
 
         public CreateReadingCommandHandler(IUserRepository userRepository,
                                            IBookRepository bookRepository,
-                                           IMediatorHandler mediatorHandler,
-                                           IUnitOfWork unitOfWork)
+                                           IReadingRepository readingRepository,
+                                           IMediatorHandler mediatorHandler)
         {
             _userRepository = userRepository;
             _bookRepository = bookRepository;
+            _readingRepository = readingRepository;
             _mediatorHandler = mediatorHandler;
-            _unitOfWork = unitOfWork;
         }
 
         public async Task<CustomResult> Handle(CreateReadingCommand message, CancellationToken cancellationToken)
@@ -34,7 +33,6 @@ namespace GoodReads.Reviews.Application.Commands.Handlers
                 return CustomResult.Failure("Invalid Command", message.GetErrors());
 
             var user = await _userRepository.GetById(message.UserId.ToString());
-
             if (user == null)
                 return CustomResult.Failure("The user does not exist", GetErrors());
 
@@ -42,16 +40,11 @@ namespace GoodReads.Reviews.Application.Commands.Handlers
             if (book == null)
                 return CustomResult.Failure("The book does not exist", GetErrors());
 
-            var reading = new Reading(book, message.StartedDate, message.EndedDate);
+            var reading = new Reading(book.Id, user.Id, message.StartedDate, message.EndedDate);
 
-            user.AddRading(reading);
+            await _readingRepository.Add(reading);
 
-            await _userRepository.Update(user);
-
-            var result = await _unitOfWork.Commit();
-
-            if (result)
-                await _mediatorHandler.Publish(new ReadingCreatedEvent(reading.Id, Guid.Parse(book.Id), Guid.Parse(user.Id), reading.StartedDate, reading.EndedDate));
+            await _mediatorHandler.Publish(new ReadingCreatedEvent(reading.Id, book.Id, user.Id, reading.StartedDate, reading.EndedDate));
 
             return CustomResult.Success("Reading created successfully", reading);
         }

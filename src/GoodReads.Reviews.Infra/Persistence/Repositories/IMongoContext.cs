@@ -2,12 +2,8 @@
 
 namespace GoodReads.Reviews.Infra.Persistence.Repositories
 {
-    public interface IMongoContext : IDisposable
+    public interface IMongoContext
     {
-        void AddCommand(Func<Task> func);
-        Task<int> SaveChanges();
         IMongoCollection<T> GetCollection<T>(string name);
     }
-
-    
 }
